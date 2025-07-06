@@ -25,7 +25,10 @@ namespace MyPF.Services
 
         private static void InsertPFLink(XivChatType type, int timestamp, ref SeString sender, ref SeString message, ref bool isHandled)
         {
-            // TODO: CHECK THAT THE SENDER IS THE LOCAL PLAYER
+            if (sender.GetSenderFullName(Plugin.ClientState) != (Plugin.ClientState.LocalPlayer?.GetFullName() ?? string.Empty))
+            {
+                return;
+            }
             Payload? payloadWithMark = message.Payloads.FirstOrDefault(p => p is ITextProvider textPayload && textPayload.Text.Contains(ReplacementToken, StringComparison.OrdinalIgnoreCase));
             if (payloadWithMark == null)
             {
