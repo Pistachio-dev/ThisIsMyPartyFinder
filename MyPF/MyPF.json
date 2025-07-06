@@ -1,0 +1,14 @@
+{
+  "Author": "Pistachio Herald",
+  "Name": "This is my party finder",
+  "Punchline": "Replaces /mypf with your current PF listing",
+  "Description": "Replaces /mypf with your current PF listing",
+  "ApplicableVersion": "any",
+  "Tags": [
+    "party finder",
+    "pf",
+    "party",
+    "recruitment",
+    "pug"
+  ]
+}
