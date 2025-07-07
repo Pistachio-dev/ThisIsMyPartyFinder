@@ -54,9 +54,9 @@ namespace MyPF.Services
 
         private string GetChosenHostName()
         {
-            if (!configuration.PartyFinderHost.IsNullOrWhitespace())
+            if (!configuration.PartyFinderHostName.IsNullOrWhitespace())
             {
-                return configuration.PartyFinderHost;
+                return configuration.PartyFinderHostName;
             }
 
             return Plugin.ClientState.LocalPlayer?.Name.ToString() ?? string.Empty;

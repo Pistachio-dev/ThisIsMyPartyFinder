@@ -38,7 +38,6 @@ public sealed class Plugin : IDalamudPlugin
         PFListener = new PartyFinderListingListener(Configuration);
         PFListener.Attach();
         ChatReader.Attach();
-        PartyFinderContextMenuService.AddPartyFinderSaving();
         
         ConfigWindow = new ConfigWindow(this);
         MainWindow = new MainWindow(this);
@@ -48,16 +47,11 @@ public sealed class Plugin : IDalamudPlugin
 
         CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Type /mypf to open the UI, write <mypf> in chat to insert your Party Finder listing."
+            HelpMessage = "Type /mypf to open the UI, write <mypf> in chat or a macro to insert your Party Finder listing."
         });
 
         PluginInterface.UiBuilder.Draw += DrawUI;
-
-        // This adds a button to the plugin installer entry of this plugin which allows
-        // to toggle the display status of the configuration ui
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUI;
-
-        // Adds another button that is doing the same but for the main ui of the plugin
         PluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
     }
 
@@ -69,14 +63,12 @@ public sealed class Plugin : IDalamudPlugin
         MainWindow.Dispose();
 
         CommandManager.RemoveHandler(CommandName);
-        PartyFinderContextMenuService.Dispose();
         PFListener.Dispose();
         ChatReader.Dispose();
     }
 
     private void OnCommand(string command, string args)
     {
-        // in response to the slash command, just toggle the display status of our main ui
         ToggleMainUI();
     }
 
