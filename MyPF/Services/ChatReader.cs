@@ -39,13 +39,11 @@ namespace MyPF.Services
         public static void Attach()
         {
             Plugin.ChatGui.ChatMessage += SplicePFLink;
-            Plugin.ChatGui.ChatMessage += DumpAllReceivedMessages;
         }
 
         public static void Dispose()
         {
             Plugin.ChatGui.ChatMessage -= SplicePFLink;
-            Plugin.ChatGui.ChatMessage -= DumpAllReceivedMessages;
         }
 
         private static void SplicePFLink(XivChatType type, int timestamp, ref SeString sender, ref SeString message, ref bool isHandled)
@@ -93,41 +91,6 @@ namespace MyPF.Services
             message.Payloads.AddRange(splicedPayloads);
 
             Plugin.Log.Info("Message rearranged!");
-        }
-
-        public static void DumpAllReceivedMessages(XivChatType type, int timestamp, ref SeString sender, ref SeString message, ref bool isHandled)
-        {
-            if (type != XivChatType.Say && type != XivChatType.TellIncoming)
-            {
-                return;
-            }
-            Plugin.Log.Info("------------------------------------------------------------------------------------------------------------");
-            Plugin.Log.Info($"Type: {type} Timestamp: {timestamp} IsHandled: {isHandled}");
-            Plugin.Log.Info("Sender as interpreted: " + sender.GetSenderFullName(Plugin.ClientState));
-            Plugin.Log.Info("Sender SeString dump---------------------------");
-            DumpSeString(sender);
-            Plugin.Log.Info("Message SeString dump---------------------------");
-            DumpSeString(message);
-            Plugin.Log.Info("------------------------------------------------------------------------------------------------------------");
-        }
-
-        public static void DumpSeString(SeString s)
-        {
-            int counter = 0;
-            foreach (Payload payload in s.Payloads)
-            {
-                string embeddedInfoType = payload.Type.ToString();
-                string text = "Unreadable";
-                if (payload is ITextProvider)
-                {
-                    ITextProvider textProvider = (ITextProvider)payload;
-                    text = textProvider.Text;
-                }
-
-                string output = $"Payload {counter} Type: {embeddedInfoType} Text: \"{text}\"";
-                Plugin.Log.Info(output);
-                counter++;
-            }
         }
     }
 }
