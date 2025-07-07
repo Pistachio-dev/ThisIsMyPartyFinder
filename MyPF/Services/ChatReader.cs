@@ -1,29 +1,54 @@
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using MyPF.Model;
 using SamplePlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyPF.Services
 {
     public static class ChatReader
     {
+        private const string DefaultHostPlayer = "Place Holder6888a89f-4c13-4ed1-bc42-5d7e20466d2c";
         public const string ReplacementToken = "<mypf>";
         private static uint PFListingId = 0;
         private static bool IsCrossWorld = true;
-        private static string PFHostPlayer = "Place Holder";
+        private static string PFHostPlayer = DefaultHostPlayer;
+        private static string PFHostWorld = "Unknown World";
+
+        internal static SavedListingInfo? GetSavedListing => PFHostPlayer == DefaultHostPlayer 
+            ? null
+            : new SavedListingInfo(PFListingId, PFHostPlayer, PFHostWorld, IsCrossWorld);
+
+        public static bool UpdatePartyFinderSavedInfo(uint listingId, string hostPlayerNoWorld, string hostWorld, bool isCrossworld)
+        {
+            bool isNew = PFListingId != listingId
+                || PFHostPlayer != hostPlayerNoWorld
+                || IsCrossWorld != isCrossworld
+                || PFHostWorld != hostWorld;
+            PFListingId = listingId;
+            PFHostPlayer = hostPlayerNoWorld;
+            PFHostWorld = hostWorld;
+            IsCrossWorld = isCrossworld;
+
+            return isNew;
+        }
 
         public static void Attach()
         {
-            Plugin.ChatGui.ChatMessage += InsertPFLink;
+            Plugin.ChatGui.ChatMessage += SplicePFLink;
             Plugin.ChatGui.ChatMessage += DumpAllReceivedMessages;
         }
 
-        private static void InsertPFLink(XivChatType type, int timestamp, ref SeString sender, ref SeString message, ref bool isHandled)
+        public static void Dispose()
+        {
+            Plugin.ChatGui.ChatMessage -= SplicePFLink;
+            Plugin.ChatGui.ChatMessage -= DumpAllReceivedMessages;
+        }
+
+        private static void SplicePFLink(XivChatType type, int timestamp, ref SeString sender, ref SeString message, ref bool isHandled)
         {
             if (sender.GetSenderFullName(Plugin.ClientState) != (Plugin.ClientState.LocalPlayer?.GetFullName() ?? string.Empty))
             {

@@ -1,4 +1,4 @@
-﻿using Dalamud.Configuration;
+using Dalamud.Configuration;
 using Dalamud.Plugin;
 using System;
 
@@ -9,6 +9,9 @@ public class Configuration : IPluginConfiguration
 {
     public int Version { get; set; } = 0;
 
+    public string? PartyFinderHost { get; set; } = null;
+
+    public bool NotifyRefresh { get; set; } = false;
     public bool IsConfigWindowMovable { get; set; } = true;
     public bool SomePropertyToBeSavedAndWithADefault { get; set; } = true;
 

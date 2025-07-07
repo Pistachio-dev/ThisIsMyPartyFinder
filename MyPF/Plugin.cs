@@ -15,11 +15,15 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService] internal static IClientState ClientState { get; private set; } = null!;
+    [PluginService] internal static IContextMenu ContextMenu { get; private set; } = null!;
     [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
     [PluginService] internal static IPluginLog Log { get; private set; } = null!;
     [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
+    [PluginService] internal static IPartyFinderGui PartyFinderGui { get; private set; } = null!;
 
     private const string CommandName = "/mypf";
+
+    private PartyFinderListingListener PFListener;
 
     public Configuration Configuration { get; init; }
 
@@ -31,7 +35,10 @@ public sealed class Plugin : IDalamudPlugin
     {
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
+        PFListener = new PartyFinderListingListener(Configuration);
+        PFListener.Attach();
         ChatReader.Attach();
+        PartyFinderContextMenuService.AddPartyFinderSaving();
         // you might normally want to embed resources and load them from the manifest stream
         var goatImagePath = Path.Combine(PluginInterface.AssemblyLocation.Directory?.FullName!, "goat.png");
 
@@ -69,6 +76,9 @@ public sealed class Plugin : IDalamudPlugin
         MainWindow.Dispose();
 
         CommandManager.RemoveHandler(CommandName);
+        PartyFinderContextMenuService.Dispose();
+        PFListener.Dispose();
+        ChatReader.Dispose();
     }
 
     private void OnCommand(string command, string args)
