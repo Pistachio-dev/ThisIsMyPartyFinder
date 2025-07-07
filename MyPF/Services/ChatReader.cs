@@ -57,7 +57,7 @@ namespace MyPF.Services
             Payload? payloadWithMark = message.Payloads.FirstOrDefault(p => p is ITextProvider textPayload && textPayload.Text.Contains(ReplacementToken, StringComparison.OrdinalIgnoreCase));
             if (payloadWithMark == null)
             {
-                Plugin.Log.Info("Message did not contain the mark.");
+                Plugin.Log.Verbose($"Message did not contain the {ReplacementToken} mark.");
                 return;
             }           
 
