@@ -24,6 +24,11 @@ namespace MyPF.Services
             ? null
             : new SavedListingInfo(PFListingId, PFHostPlayer, PFHostWorld, IsCrossWorld, SavedAt, LasRefreshedAt);
 
+        public static void ForgetListing()
+        {
+            PFHostPlayer = DefaultHostPlayer;
+        }
+
         public static bool UpdatePartyFinderSavedInfo(uint listingId, string hostPlayerNoWorld, string hostWorld, bool isCrossworld)
         {
             bool isNew = PFListingId != listingId

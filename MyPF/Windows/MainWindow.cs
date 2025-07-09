@@ -58,7 +58,7 @@ public class MainWindow : Window, IDisposable
         if (savedListing != null)
         {
             ImGui.SameLine();
-            ImGuiComponents.IconButtonWithText(FontAwesomeIcon.XmarksLines, "Forget PF listing");
+            ImGuiComponents.IconButtonWithText(FontAwesomeIcon.SquareXmark, "Forget PF listing");
         }        
     }
 
@@ -76,9 +76,9 @@ public class MainWindow : Window, IDisposable
         ImGui.TextUnformatted("Host Player: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, savedListing.HostName);
         ImGui.TextUnformatted("World: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, savedListing.WorldName);
         ImGui.TextUnformatted("Cross-world?: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, savedListing.IsCrossWorld ? "Yes" : "No");
-        string savedAtText = (savedListing.SavedAt - DateTime.UtcNow).Humanize();
+        string savedAtText = $"{(savedListing.SavedAt - DateTime.UtcNow).Humanize()} ago";
         ImGui.TextUnformatted("Saved at: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, savedAtText);
-        string refreshedAtText = (savedListing.LastRefreshedAt - DateTime.UtcNow).Humanize();
+        string refreshedAtText = $"{(savedListing.LastRefreshedAt - DateTime.UtcNow).Humanize()} ago";
         ImGui.TextUnformatted("Last refreshed at: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, refreshedAtText);
     }
 }
