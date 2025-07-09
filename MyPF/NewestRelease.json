@@ -1,6 +1,6 @@
 {
-    "AssemblyVersion" : "1.0.0.0",
+    "AssemblyVersion" : "1.0.0.1",
     "DalamudApiLevel" : 12,
-    "ChangeLog": "First functional build",
+    "ChangeLog": "Added help messages\nAdded \"Forget listing\" button\nAdded timers\"Added toast notification for saved listing",
     "IsTest": false
 }
