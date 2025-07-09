@@ -3,7 +3,7 @@ using Dalamud.Utility;
 using System;
 using System.Linq;
 
-namespace MyPF.Services
+namespace MyPF.Extensions
 {
     public static class PlayerCharacterExtensions
     {

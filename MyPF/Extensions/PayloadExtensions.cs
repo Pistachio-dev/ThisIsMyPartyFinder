@@ -1,6 +1,6 @@
 using Dalamud.Game.Text.SeStringHandling;
 
-namespace MyPF.Services
+namespace MyPF.Extensions
 {
     public static class PayloadExtensions
     {

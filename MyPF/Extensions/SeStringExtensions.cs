@@ -3,14 +3,14 @@ using Dalamud.Plugin.Services;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace MyPF.Services
+namespace MyPF.Extensions
 {
     public static class SeStringExtensions
     {
         public static string GetSenderFullName(this SeString chatMessageSender, IClientState gameClient)
         {
-            Payload? playerPayload = chatMessageSender.Payloads.FirstOrDefault(p => p.Type == PayloadType.Player);
-            string playerName = "Uninitialized";
+            var playerPayload = chatMessageSender.Payloads.FirstOrDefault(p => p.Type == PayloadType.Player);
+            var playerName = "Uninitialized";
             if (playerPayload != null)
             {
                 var groups = new Regex("Player - PlayerName: ([^\\s,]+ [^\\s,]+), ServerId.*ServerName: (\\S+)").Match(playerPayload.ToString()!).Groups;

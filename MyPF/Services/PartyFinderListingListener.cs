@@ -44,6 +44,12 @@ namespace MyPF.Services
                 if (isNew)
                 {
                     Plugin.ChatGui.Print($"PF listing for {hostName} saved.");
+                    Plugin.ToastGui.ShowQuest("<mypf> saved!", new Dalamud.Game.Gui.Toast.QuestToastOptions
+                    {
+                        PlaySound = true,
+                        DisplayCheckmark = true,
+                        IconId = 54
+                    });
                 }
                 else if (configuration.NotifyRefresh)
                 {
