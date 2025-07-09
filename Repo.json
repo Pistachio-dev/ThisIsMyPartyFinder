@@ -16,11 +16,11 @@
       "group"
     ],
     "DalamudApiLevel": 12,
-    "AssemblyVersion": "1.0.0.0",
-    "Changelog": "First functional build",
-    "DownloadLinkInstall": "https://github.com/Pistachio-dev/ThisIsMyPartyFinder/releases/download/1.0.0.0_release/MyPF.zip",
-    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/ThisIsMyPartyFinder/releases/download/1.0.0.0_release/MyPF.zip",
-    "LastUpdate": 1751876495,
+    "AssemblyVersion": "1.0.0.1",
+    "Changelog": "Added help messages\nAdded \"Forget listing\" button\nAdded timers\"Added toast notification for saved listing",
+    "DownloadLinkInstall": "https://github.com/Pistachio-dev/ThisIsMyPartyFinder/releases/download/1.0.0.1_release/MyPF.zip",
+    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/ThisIsMyPartyFinder/releases/download/1.0.0.1_release/MyPF.zip",
+    "LastUpdate": 1752093266,
     "InternalName": "MyPF"
   }
 ]
