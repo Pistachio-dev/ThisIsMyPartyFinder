@@ -55,7 +55,13 @@ public class MainWindow : Window, IDisposable
         if (ImGuiComponents.IconButtonWithText(FontAwesomeIcon.Wrench, "Open settings"))
         {
             Plugin.ToggleConfigUI();
-        }       
+        }
+        
+        if (savedListing != null)
+        {
+            ImGui.SameLine();
+            ImGuiComponents.IconButtonWithText(FontAwesomeIcon.XmarksLines, "Forget PF listing");
+        }        
     }
 
     private void DrawSavedListing(SavedListingInfo? savedListing)
