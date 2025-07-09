@@ -51,13 +51,20 @@ namespace MyPF.Services
             if (sender.GetSenderFullName(Plugin.ClientState) != (Plugin.ClientState.LocalPlayer?.GetFullName() ?? string.Empty))
             {
                 return;
-            }
+            }            
             Payload? payloadWithMark = message.Payloads.FirstOrDefault(p => p is ITextProvider textPayload && textPayload.Text.Contains(ReplacementToken, StringComparison.OrdinalIgnoreCase));
             if (payloadWithMark == null)
             {
                 Plugin.Log.Verbose($"Message did not contain the {ReplacementToken} mark.");
                 return;
-            }           
+            }
+
+            if (PFHostPlayer == DefaultHostPlayer)
+            {
+                Plugin.Log.Warning("Splicing attempted before saving a PF.");
+                Plugin.ChatGui.Print("You have no saved PF! Make sure to open PF and flip to the page that has your duty, so the plugin can save it.");
+                    return;
+            }
 
             var text = (payloadWithMark as ITextProvider)!.Text;
             int cutoffPoint = text.IndexOf(ReplacementToken);
