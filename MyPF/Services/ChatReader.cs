@@ -17,10 +17,12 @@ namespace MyPF.Services
         private static bool IsCrossWorld = true;
         private static string PFHostPlayer = DefaultHostPlayer;
         private static string PFHostWorld = "Unknown World";
+        private static DateTime SavedAt = DateTime.MinValue;
+        private static DateTime LasRefreshedAt = DateTime.MinValue;
 
         internal static SavedListingInfo? GetSavedListing => PFHostPlayer == DefaultHostPlayer 
             ? null
-            : new SavedListingInfo(PFListingId, PFHostPlayer, PFHostWorld, IsCrossWorld);
+            : new SavedListingInfo(PFListingId, PFHostPlayer, PFHostWorld, IsCrossWorld, SavedAt, LasRefreshedAt);
 
         public static bool UpdatePartyFinderSavedInfo(uint listingId, string hostPlayerNoWorld, string hostWorld, bool isCrossworld)
         {
@@ -32,6 +34,11 @@ namespace MyPF.Services
             PFHostPlayer = hostPlayerNoWorld;
             PFHostWorld = hostWorld;
             IsCrossWorld = isCrossworld;
+            LasRefreshedAt = DateTime.UtcNow;
+            if (isNew)
+            {
+                SavedAt = DateTime.UtcNow;
+            }
 
             return isNew;
         }

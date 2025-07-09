@@ -1,10 +1,8 @@
 using Dalamud.Interface;
 using Dalamud.Interface.Components;
-using Dalamud.Interface.Utility;
-using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
+using Humanizer;
 using ImGuiNET;
-using Lumina.Excel.Sheets;
 using MyPF.Model;
 using MyPF.Services;
 using System;
@@ -78,5 +76,9 @@ public class MainWindow : Window, IDisposable
         ImGui.TextUnformatted("Host Player: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, savedListing.HostName);
         ImGui.TextUnformatted("World: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, savedListing.WorldName);
         ImGui.TextUnformatted("Cross-world?: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, savedListing.IsCrossWorld ? "Yes" : "No");
+        string savedAtText = (savedListing.SavedAt - DateTime.UtcNow).Humanize();
+        ImGui.TextUnformatted("Saved at: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, savedAtText);
+        string refreshedAtText = (savedListing.LastRefreshedAt - DateTime.UtcNow).Humanize();
+        ImGui.TextUnformatted("Last refreshed at: "); ImGui.SameLine(); ImGui.TextColored(LightGreen, refreshedAtText);
     }
 }
