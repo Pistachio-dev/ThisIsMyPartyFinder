@@ -63,6 +63,8 @@ public class MainWindow : Window, IDisposable
         if (savedListing == null)
         {
             ImGui.TextUnformatted("None yet. Reopen Party Finder to refresh.");
+            ImGui.TextUnformatted("Your duty may not be on the first page of PF,");
+            ImGui.TextUnformatted("make sure to view the other pages until it is found and saved.");
             return;
         }
 
