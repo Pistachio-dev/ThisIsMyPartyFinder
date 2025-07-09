@@ -58,7 +58,10 @@ public class MainWindow : Window, IDisposable
         if (savedListing != null)
         {
             ImGui.SameLine();
-            ImGuiComponents.IconButtonWithText(FontAwesomeIcon.SquareXmark, "Forget PF listing");
+            if(ImGuiComponents.IconButtonWithText(FontAwesomeIcon.SquareXmark, "Forget PF listing"))
+            {
+                ChatReader.ForgetListing();
+            }
         }        
     }
 
